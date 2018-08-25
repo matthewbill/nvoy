@@ -1,0 +1,35 @@
+{
+  "name": "nvoy",
+  "version": "0.1.0",
+  "description": "Node.js implementation of an AWS metrics emitter.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "docs": "jsdoc ./src -r -d ./docs --verbose",
+    "test": "cross-env NODE_ENV=development IS_DEBUG=true ORG=MyOrg jest __tests__ --coverage",
+    "int-test": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true ORG=MyOrg jest __int_tests__ --coverage",
+    "service-metrics-emitter": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true EMITTER_BATCH_DELAY=60000 ORG=MyOrg nvoy-service-metrics-emitter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://matthewdbill@bitbucket.org/matthewdbill/nvoy.git"
+  },
+  "author": "Matthew Bill",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/matthewdbill/nvoy#readme",
+  "devDependencies": {
+    "cross-env": "5.2.0",
+    "eslint": "5.4.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "jest": "23.5.0",
+    "jsdoc": "3.5.5"
+  },
+  "dependencies": {
+    "aws-sdk": "2.300.0",
+    "winston": "3.0.0"
+  },
+  "bin": {
+    "nvoy-service-metrics-emitter": "./scripts/service-metrics-emitter/test-app.js"
+  }
+}
