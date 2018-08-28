@@ -2,8 +2,7 @@ language: node_js
 
 branches:
   only:
-  - legacy
-  - experimenta
+  - master
 
 deploy:
   provider: npm
