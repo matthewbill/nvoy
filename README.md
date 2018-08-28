@@ -1,11 +1,27 @@
 # nvoy #
 
 ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg) ![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg) ![Travis (.org)](https://img.shields.io/travis/matthewbill/nvoy.svg)
-
-
 ![npm](https://img.shields.io/npm/v/nvoy.svg) ![npm](https://img.shields.io/npm/dt/nvoy.svg)
 
-nvoy is a tool for batching up `cloudwatch metrics` and sending them to `AWS`. It runs in the background of any node app and emits the metrics after a configurable amount of time has passed.
+nvoy is a tool for batching up `AWS CloudWatch Metrics` and sending them to `AWS`. It runs in the background of any node app and emits the metrics after a configurable amount of time has passed. The benefits of this are:
+
+* Reduces AWS costs by reducing the number of PUTs.
+* Circumvents AWS limits on the number of metrics that can be sent per second. This is especially useful for high volume applications, which create large amount of metrics.
+* Reduces network traffic and other resource needs of applications.
+
+## Install ##
+
+``` shell
+npm install nvoy
+
+```
+
+or
+
+``` shell
+npm install novy --save
+
+```
 
 ## Components ##
 
@@ -23,7 +39,7 @@ There are a number of components that make up nvoy. To get started, all you need
 | Component             | Description                                                                                |
 | --------------------- | ------------------------------------------------------------------------------------------ |
 | ServiceMetricsEmitter | Inhrerits from AwsMetricsEmitter and contains short cut methods for service based metrics. |
-| WebMetricsEmitter | Inhrerits from AwsMetricsEmitter and contains short cut methods for web based metrics.         | 
+| WebMetricsEmitter | Inhrerits from AwsMetricsEmitter and contains short cut methods for web based metrics.         |
 
 ## AWS Credentials ##
 
@@ -33,17 +49,17 @@ You will need to configure your credentials through the aws cli or other means f
 
 The aws-metrics-emitter constructor takes a winston logger or signature matchin equivilent for the purposes of logging.
 
-# AWS Metrics Emmitter #
+## AWS Metrics Emmitter ##
 
-## Prerequisites ##
+### Prerequisites ###
 
-The AWS Emitter requires a `winston` logger to be passed in. 
+The AWS Emitter requires a `winston` logger to be passed in.
 
 ``` js
 const winston  = require('winston');
 ```
 
-## Create AWS Emitter ##
+### Create AWS Emitter ###
 
 When creating an aws emitter, there are a number options that need to be passed into the constructor. There is additionally an option to pass through a cloud watch object to help with testing; but for most cases you will want to pass in null.
 
@@ -65,7 +81,10 @@ const awsMetricsEmitter = new AwsMetricsEmitter(batchDelay, autoStart, null, log
 awsMetricsEmitter.start(); // not needed if autoStart = true
 
 ```
-## Add Metrics ##
+
+### Add Metrics ###
+
+> WARNING: There is a maximum size limit on the request of putting metrics. Be sure to make sure your aggregated metrics do not exceed this. Visit the [AWS CloudWatch limits page](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_limits.html) for more details.
 
 ``` js
 
@@ -79,17 +98,17 @@ awsMetricsEmitter.buffer.addMetricDatum(namespace, metricName, dimensions, unit,
 
 ```
 
-# Service Metrics Emitter #
+## Service Metrics Emitter ##
 
 The Service Metrics emitter acts as a short cute for adding metrics to a REST based service, such as a microservice. It inherits from the AWS Metrics Emitter.
 
 The namespace used for metrics is `{self.org}/Services/{appName}`.
 
-## Prerequisites ##
+### Prerequisites ###
 
 These are the same as the AMS Metrics Emitter.
 
-## Create Service Metrics Emitter ##
+### Create Service Metrics Emitter ###
 
 The Service Metrics Emitter is created in a very similar way to the AWS Metrics emitter, but also requires `org` and `environment` to be passed in.
 
@@ -112,7 +131,7 @@ awsMetricsEmitter.start(); // not needed if autoStart = true
 
 ```
 
-## Add Metrics
+### Add Metrics ###
 
 The folowing example demonstrates the typical metrics you will want to add for every service call:
 
@@ -120,7 +139,6 @@ The folowing example demonstrates the typical metrics you will want to add for e
 
 // options
 const serviceName = 'MyService';
-const method = 'GET';
 
 // Add one to the number of requests for the service as a whole.
 serviceMetricsEmitter.addRequestCountMetric(serviceName);
@@ -150,11 +168,11 @@ ServiceMetricMethods.BAD_REQUEST_RESPONSES() // returns 'BadRequestResponses'
 
 ```
 
-# Web Metrics Emitter #
+## Web Metrics Emitter ##
 
 The Web Metrics Emitter is very similar to the Service Metrics Emitter, but is more aimed towards non REST service web applications. The main difference is the namespace used for metrics, which is  `{self.org}/Apps/{appName}`.
 
-## Prerequisites ##
+### Prerequisites ###
 
 These are the same as the AMS Metrics Emitter.
 
@@ -166,7 +184,7 @@ The Web Metrics Emitter is created in the same way as the Service Metrics Emitte
 const { WebMetricsEmitter } = require('envoy');
 ```
 
-## Add Metrics ##
+### Add Metrics ###
 
 The folowing example demonstrates the typical metrics you will want to add for every service call:
 
@@ -191,10 +209,10 @@ serviceMetricsEmitter.addResponseSizeMetric(appName, 'GET', 10);
 
 ```
 
-## Supporting Classes ##
+### Supporting Classes ###
 The Web Metrics Emitter uses the same internal classes as the ServiceMetricsEmitter.
 
-# Test Applications
+## Test Applications ##
 
 > WARNING: Running the test applications will use AWS resources and you may be charged.
 
@@ -202,18 +220,20 @@ A number of test applications have been bundled into the package to allow for ea
 
 | command                      | description                        |
 | ---------------------------- | ---------------------------------- |
-| nvoy-service-metrics-emitter | emmits test service metrics to AWS | 
+| nvoy-service-metrics-emitter | emmits test service metrics to AWS |
 
-## NPX ##
+### NPX ###
 
 You can also run the test applications without needing to download or install the package by using npx. For example: `npx nvoy nvoy-service-metrics-emitter`.
 
-# Contributing
+## Contributing ##
+
 nvoy is a new project and looking for people to contribute and help make it better. Please see the document on [Contributing](CONTRIBUTING.md).
 
 Please see also our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-# License #
+## License ##
+
 Copyright (c) Matthew Bill. All rights reserved.
 
 Licensed under the MIT License.

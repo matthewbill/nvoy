@@ -1,0 +1,11 @@
+__int_tests__/
+__tests__/
+.vscode/
+scripts/
+.eslintignore
+.eslintrc.js
+.npmrc
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+jest.config.js
+travis.yml

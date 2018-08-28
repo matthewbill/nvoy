@@ -11,7 +11,8 @@ const ServiceMetricNames = require('../service-metrics/service-metric-names.js')
 class WebMetricsEmitter extends AwsMetricsEmitter {
   /**
      * Constructor for WebMetricsEmitter
-     * @param {number} batchDelay The number of millisencons to wait before sending the metrics data. If set to null or less than 1, then metrics will be emitted individually.
+     * @param {number} batchDelay The number of millisencons to wait before sending the metrics data.
+     * If set to null or less than 1, then metrics will be emitted individually.
      * @param {bool} autoStart If true, then the emitter autimatically starts emitting mmetrics after the batch delay.
      * @param {string} org The organisation the metrics are for. This is used to determine the namespace.
      * @param {string} environment Tbe environment the metrics are for. This is added as a dimension to all metrics.
@@ -85,7 +86,8 @@ class WebMetricsEmitter extends AwsMetricsEmitter {
       { Name: 'Method', Value: method },
       { Name: 'Environment', Value: self.environment },
     ];
-    return self.buffer.addMetricDatum(namespace, metricName, dimensions, unit, value, true);
+    return self.buffer.addMetricDatum(namespace,
+      metricName, dimensions, unit, value, true);
   }
 
   /**

@@ -2,8 +2,8 @@
 
 const winston = require('winston');
 
-const ServiceMetricsEmitter = require('../../src/service-metrics/service-metrics-emitter');
-const ServiceMetricsEmitterTestDataGenerator = require('../../__int_tests__/serviceMetrics/service-metrics-emitter-test-data-generator');
+const ServiceMetricsEmitter = require('../src/service-metrics/service-metrics-emitter.js');
+const ServiceMetricsEmitterTestDataGenerator = require('../data-generator/service-metrics/service-metrics-data-generator.js');
 
 const emitterBatchDelay = process.env.EMITTER_BATCH_DELAY;
 const org = process.env.ORG;
@@ -24,12 +24,12 @@ const serviceMetricsEmitter = new ServiceMetricsEmitter(
 logger.info(`ServiceMetricsEmitter created with batchDelay of ${emitterBatchDelay}.`);
 
 /** Create Test Data Generator */
-const serviceMetricsEmitterTestDataGenerator = new ServiceMetricsEmitterTestDataGenerator(logger);
+const dataGenerator = new ServiceMetricsEmitterTestDataGenerator(logger);
 logger.info(`AwsMetricsBufferTestDataGenerator created with generationDelay of ${generationDelay}.`);
 
 function addData() {
   logger.info('Adding test data to service metrics emitter buffer.');
-  serviceMetricsEmitterTestDataGenerator.addData(serviceMetricsEmitter);
+  dataGenerator.addData(serviceMetricsEmitter);
   logger.info(`Finished adding test data. Delaying generation of data by ${generationDelay}`);
   setTimeout(addData, generationDelay, serviceMetricsEmitter);
 }

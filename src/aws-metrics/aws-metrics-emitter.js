@@ -59,7 +59,7 @@ class AwsMetricsEmitter {
     const self = this;
     self.logger.debug('Starting emitter.');
     self.enabled = true;
-    self.flushBuffer(self);
+    AwsMetricsEmitter.flushBuffer(self);
   }
 
   /**
@@ -75,20 +75,21 @@ class AwsMetricsEmitter {
      * Flushes the buffer of all metrics and sets a timer based on the batchDelay
      * @param {AwsMetricsEmitter} awsMetricsEmitter The aws metrics emitter that called the flush. Needed as self is not always the class the method belongs to.
      */
-  flushBuffer(awsMetricsEmitter) {
+  static flushBuffer(awsMetricsEmitter) {
     // Note: self is not always the class, but the calling timeout. Not safe to use self.
-    const self = this;
     awsMetricsEmitter.logger.debug('Flushing buffer.');
     if (awsMetricsEmitter.enabled) {
       awsMetricsEmitter.logger.debug('Emitter: ENABLED.');
       awsMetricsEmitter.emitBuffer().then(() => {
         awsMetricsEmitter.logger.debug(`Restarting delay timer of ${awsMetricsEmitter.batchDelay} for flush.`);
-        setTimeout(awsMetricsEmitter.flushBuffer, awsMetricsEmitter.batchDelay, awsMetricsEmitter);
+        setTimeout(AwsMetricsEmitter.flushBuffer,
+          awsMetricsEmitter.batchDelay, awsMetricsEmitter);
       });
     } else {
       awsMetricsEmitter.logger.verbose('Emitter DISABLED when flushing buffer.', awsMetricsEmitter.buffer);
       awsMetricsEmitter.logger.debug(`Restarting delay timer of ${awsMetricsEmitter.batchDelay} for flush after detecting emitter DISABLED.`);
-      setTimeout(awsMetricsEmitter.flushBuffer, awsMetricsEmitter.batchDelay, awsMetricsEmitter);
+      setTimeout(AwsMetricsEmitter.flushBuffer,
+        awsMetricsEmitter.batchDelay, awsMetricsEmitter);
     }
   }
 
@@ -104,7 +105,9 @@ class AwsMetricsEmitter {
       const flushPromises = [];
       namespaceMetricCollections.forEach((namespaceMerticCollection) => {
         self.logger.debug(`Namespace Metric Collections Count: ${namespaceMerticCollection.length}`);
-        const emitPromises = namespaceMerticCollection.map(namespaceMetrics => self.emitNamespaceMetrics(namespaceMetrics));
+        const emitPromises = namespaceMerticCollection.map(
+          namespaceMetrics => self.emitNamespaceMetrics(namespaceMetrics),
+        );
         flushPromises.push(emitPromises);
       });
       if (flushPromises.length < 1) {

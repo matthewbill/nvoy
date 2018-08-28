@@ -85,7 +85,8 @@ class ServiceMetricsEmitter extends AwsMetricsEmitter {
       { Name: 'Method', Value: method },
       { Name: 'Environment', Value: self.environment },
     ];
-    return self.buffer.addMetricDatum(namespace, metricName, dimensions, unit, value, true);
+    return self.buffer.addMetricDatum(namespace,
+      metricName, dimensions, unit, value, true);
   }
 
   /**

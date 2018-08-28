@@ -65,11 +65,12 @@ class AwsMetricsBuffer {
   addMetricDatum(namespace, metricName, dimensions, unit, value, aggregate) {
     const self = this;
     if (aggregate) {
-      const metricDatum = self.findMetricDatum(namespace, metricName, dimensions);
+      const metricDatum = self.findMetricDatum(namespace,
+        metricName, dimensions);
       if (metricDatum === null) {
         self.addNewMetricDatum(namespace, metricName, dimensions, unit, value);
       } else {
-        self.aggregateMetricDatum(metricDatum, value);
+        AwsMetricsBuffer.aggregateMetricDatum(metricDatum, value);
       }
     } else {
       self.addNewMetricDatum(namespace, metricName, dimensions, unit, value);
@@ -96,7 +97,8 @@ class AwsMetricsBuffer {
     if (namespaceMetricsCollection.length === 0) {
       namespaceMetrics = self.addNamespaceMetrics(namespace);
     } else {
-      namespaceMetrics = namespaceMetricsCollection[namespaceMetricsCollection.length - 1];
+      const index = namespaceMetricsCollection.length - 1;
+      namespaceMetrics = namespaceMetricsCollection[index];
       if (namespaceMetrics.MetricData.length === 20) {
         // Add new metrics namespace as aws limit reached.
         namespaceMetrics = self.addNamespaceMetrics(namespace);
@@ -116,13 +118,14 @@ class AwsMetricsBuffer {
   findMetricDatum(namespace, metricName, dimensions) {
     const self = this;
     let metricDatum = null;
-    if (this.buffer[namespace] === undefined) {
+    if (self.buffer[namespace] === undefined) {
       return metricDatum;
     }
-    this.buffer[namespace].forEach((namespaceMetrics) => {
+    self.buffer[namespace].forEach((namespaceMetrics) => {
       namespaceMetrics.MetricData.forEach((metricsDatum) => {
         if (metricsDatum.MetricName === metricName
-            && self.dimensionsAreEqual(metricsDatum.Dimensions, dimensions)) {
+            && AwsMetricsBuffer.dimensionsAreEqual(metricsDatum.Dimensions,
+              dimensions)) {
           metricDatum = metricsDatum;
         }
       });
@@ -135,26 +138,26 @@ class AwsMetricsBuffer {
      * @param {AwsMetricDatum} metricDatum The metric datum.
      * @param {string} value The value to aggregate the metric datum by.
      */
-  aggregateMetricDatum(metricDatum, value) {
-    const self = this;
-    if (metricDatum.StatisticValues !== undefined) {
-      if (metricDatum.StatisticValues.Maximum < value) {
-        metricDatum.StatisticValues.Maximum = value;
+  static aggregateMetricDatum(metricDatum, value) {
+    const aggregatedMetricDatum = metricDatum;
+    if (aggregatedMetricDatum.StatisticValues !== undefined) {
+      if (aggregatedMetricDatum.StatisticValues.Maximum < value) {
+        aggregatedMetricDatum.StatisticValues.Maximum = value;
       }
-      if (metricDatum.StatisticValues.Minimum > value) {
-        metricDatum.StatisticValues.Minimum = value;
+      if (aggregatedMetricDatum.StatisticValues.Minimum > value) {
+        aggregatedMetricDatum.StatisticValues.Minimum = value;
       }
-      metricDatum.StatisticValues.SampleCount += 1;
-      metricDatum.StatisticValues.Sum += value;
+      aggregatedMetricDatum.StatisticValues.SampleCount += 1;
+      aggregatedMetricDatum.StatisticValues.Sum += value;
     } else {
-      metricDatum.StatisticValues = {
+      aggregatedMetricDatum.StatisticValues = {
         Maximum: value,
         Minimum: value,
         SampleCount: 2,
-        Sum: value + metricDatum.Value,
+        Sum: value + aggregatedMetricDatum.Value,
       };
       // Remove value as statisticValues now used instead.
-      delete metricDatum.Value;
+      delete aggregatedMetricDatum.Value;
     }
   }
 
@@ -163,8 +166,7 @@ class AwsMetricsBuffer {
      * @param {*} a
      * @param {*} b
      */
-  dimensionsAreEqual(a, b) {
-    const self = this;
+  static dimensionsAreEqual(a, b) {
     if ((a === null || a === undefined) && (b === null || b === undefined)) {
       return true;
     }

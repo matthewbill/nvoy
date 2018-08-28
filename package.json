@@ -17,6 +17,7 @@
   "author": "Matthew Bill",
   "license": "MIT",
   "homepage": "https://bitbucket.org/matthewdbill/nvoy#readme",
+  "bugs": "https://github.com/matthewbill/nvoy/issues/",
   "devDependencies": {
     "cross-env": "5.2.0",
     "eslint": "5.4.0",
@@ -29,7 +30,14 @@
     "aws-sdk": "2.300.0",
     "winston": "3.0.0"
   },
+  "keywords": [
+    "aws",
+    "cloudwatch",
+    "metrics",
+    "batch",
+    "emitter"
+  ],
   "bin": {
-    "nvoy-service-metrics-emitter": "./scripts/service-metrics-emitter/test-app.js"
+    "nvoy-service-metrics-emitter": "./bin/service-metrics-emitter.js"
   }
 }

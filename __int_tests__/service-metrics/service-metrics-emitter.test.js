@@ -1,5 +1,5 @@
 const ServiceMetricsEmitter = require('../../src/service-metrics/service-metrics-emitter');
-const ServiceMetricsBufferTestDataGenerator = require('./service-metrics-emitter-test-data-generator');
+const ServiceMetricsBufferTestDataGenerator = require('../../data-generator/service-metrics/service-metrics-data-generator.js');
 
 
 describe('emitBuffer', () => {
