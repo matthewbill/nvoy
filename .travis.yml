@@ -19,7 +19,7 @@ provider: npm
 email: $MDB_NPM_EMAIL
 api_key: $MDB_NPM_TOKEN
 
-after_success:
+after_deploy:
 - git add package.json
 - git commit -m "[skip ci]"
 - git push
