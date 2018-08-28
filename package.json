@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "docs": "jsdoc ./src -r -d ./docs --verbose",
-    "test": "cross-env NODE_ENV=development IS_DEBUG=true ORG=MyOrg jest __tests__ --coverage",
+    "test": "jest __tests__ --coverage",
     "int-test": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true ORG=MyOrg jest __int_tests__ --coverage",
     "service-metrics-emitter": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true EMITTER_BATCH_DELAY=60000 ORG=MyOrg nvoy-service-metrics-emitter"
   },
