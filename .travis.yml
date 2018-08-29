@@ -22,11 +22,11 @@ deploy:
 after_deploy:
 - git config user.name "Travis CI"
 - git config user.email "travis@travis-ci.org"
-- git remote add deploy "https://$MDB_GIT_TOKEN@github.com/matthewbil/nvoy.git" &>/dev/null
+- git remote add deploy "https://$MDB_GIT_USER:$MDB_GIT_TOKEN@github.com/matthewbil/nvoy.git" &>/dev/null
 - git add package.json
 - git commit -m "[skip ci]"
-- git push deploy
+- git push deploy master
 - git tag $VERSION
-- git push deploy --tags
+- git push deploy master --tags
 
   
