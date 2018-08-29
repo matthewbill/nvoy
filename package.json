@@ -1,6 +1,6 @@
 {
   "name": "nvoy",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Node.js implementation of an AWS metrics emitter.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "docs": "jsdoc ./src -r -d ./docs --verbose",
     "test": "jest __tests__ --coverage",
     "int-test": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true ORG=MyOrg jest __int_tests__ --coverage",
-    "service-metrics-emitter": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true EMITTER_BATCH_DELAY=60000 ORG=MyOrg nvoy-service-metrics-emitter"
+    "service-metrics-emitter": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true EMITTER_BATCH_DELAY=60000 ORG=MyOrg nvoy-service-metrics-emitter",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.300.0",
+    "conventional-changelog-cli": "2.0.5",
     "winston": "3.0.0"
   },
   "keywords": [
