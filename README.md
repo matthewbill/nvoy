@@ -1,6 +1,8 @@
 # nvoy #
 
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg) ![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg) ![Travis (.org)](https://img.shields.io/travis/matthewbill/nvoy.svg)
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg) 
+[![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)](https://github.com/matthewbill/nvoy/issues)
+ ![Travis (.org)](https://img.shields.io/travis/matthewbill/nvoy.svg)
 ![npm](https://img.shields.io/npm/v/nvoy.svg) ![npm](https://img.shields.io/npm/dt/nvoy.svg)
 
 nvoy is a tool for batching up `AWS CloudWatch Metrics` and sending them to `AWS`. It runs in the background of any node app and emits the metrics after a configurable amount of time has passed. The benefits of this are:
