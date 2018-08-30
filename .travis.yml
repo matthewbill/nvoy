@@ -13,6 +13,7 @@ before_install:
 - sudo apt-get install -y jq
 
 before_deploy:
+- git checkout master
 - git branch
 - ls -a
 - git remote set-url origin https://$MDB_GIT_USER:$MDB_GIT_TOKEN@github.com/matthewbill/nvoy.git
