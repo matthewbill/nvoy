@@ -31,6 +31,8 @@ before_deploy:
 - echo test;
 - VERSION="${VERSION//\"}"
 - echo $VERSION;
+- TEST_VAR = hi
+- echo $TEST_VAR
 
 deploy:
   provider: npm
