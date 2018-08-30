@@ -20,6 +20,8 @@ before_deploy:
 - git config --global push.default simple
 - git config user.name "Travis CI"
 - git config user.email "travis@travis-ci.org"
+- git config credential.helper "store --file=.git/credentials"
+- echo "https://${MDB_GIT_TOKEN}:@github.com" > .git/credentials
 - npm config set git-tag-version=false # git-tag-version is false otherwise cause infinite loop
 - git branch
 - ls -a
