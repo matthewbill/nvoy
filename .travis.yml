@@ -10,7 +10,6 @@ branches:
 
 before_deploy:
 - git remote set-url origin https://$MDB_GIT_USER:$MDB_GIT_TOKEN@github.com/matthewbill/nvoy.git
-- git init
 - git config --global push.default simple
 - git config user.name "Travis CI"
 - git config user.email "travis@travis-ci.org"
@@ -27,7 +26,7 @@ deploy:
   api_key: $MDB_NPM_TOKEN
 
 after_deploy:
-- git add .
+- git add package.json
 - git commit -m "[skip ci]"
 - git push
 - git tag $VERSION
