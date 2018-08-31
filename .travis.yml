@@ -9,6 +9,7 @@ branches:
   - master
 
 before_install:
+# Setup
 - sudo apt-get update
 - sudo apt-get install -y jq
 - pip install --upgrade --user awscli
@@ -19,12 +20,14 @@ script:
 - npm run lint
 
 before_deploy:
+# Git Configuration
 - git checkout master
 - git remote set-url origin https://$GIT_HUB_USER:$GIT_HUB_TOKEN@github.com/matthewbill/nvoy.git
 - git config --global push.default simple
 - git config user.name "Travis CI"
 - git config user.email "travis@travis-ci.org"
 - npm config set git-tag-version=false # git-tag-version is false otherwise cause infinite loop
+# Version
 - npm version patch
 - export VERSION=$(jq '.version' package.json)
 - VERSION="${VERSION//\"}"
@@ -36,14 +39,17 @@ deploy:
   api_key: $MDB_NPM_TOKEN
 
 after_deploy:
+# Infrastructure
 - echo Validating Cloud Formation Templates
 - aws cloudformation validate-template --template-body file://scripts/deployment/infrastructure-template.json
 - echo Deploying Infrastructure
 - aws cloudformation deploy --stack-name nvoy --template-file ./scripts/deployment/infrastructure-template.json --no-fail-on-empty-changeset
+# Update Repo
 - git add package.json
 - git commit -m "[skip ci]"
 - git push
 - git tag $VERSION
 - git push --tags
+# Docs
 - npm run docs
 - aws s3 cp ./docs s3://nvoy/$VERSION --recursive
