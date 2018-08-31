@@ -12,12 +12,12 @@ before_install:
 - sudo apt-get update
 - sudo apt-get install -y jq
 - sudo apt-get install -y python-dev
-- curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
-- curl -O https://bootstrap.pypa.io/get-pip.py
-- python get-pip.py
-- pip install awscli
-- declare -x PYTHONIOENCODING=UTF-8
-- pip install awscli
+- sudo curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
+- sudo curl -O https://bootstrap.pypa.io/get-pip.py
+- sudo python get-pip.py
+- sudo pip install awscli
+- sudo declare -x PYTHONIOENCODING=UTF-8
+- sudo pip install awscli
 - aws --version
 
 script:
