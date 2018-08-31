@@ -52,4 +52,6 @@ after_deploy:
 - git push --tags
 # Docs
 - npm run docs
+- aws s3 rm s3://nvoy/current --recursive
+- aws s3 cp ./docs s3://nvoy/current --recursive
 - aws s3 cp ./docs s3://nvoy/$VERSION --recursive
