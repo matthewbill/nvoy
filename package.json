@@ -13,11 +13,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://matthewdbill@bitbucket.org/matthewdbill/nvoy.git"
+    "url": "git+https://github.com/matthewbill/nvoy.git"
   },
   "author": "Matthew Bill",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/matthewdbill/nvoy#readme",
+  "homepage": "https://github.com/matthewbill/nvoy#readme",
   "bugs": "https://github.com/matthewbill/nvoy/issues/",
   "devDependencies": {
     "cross-env": "5.2.0",
