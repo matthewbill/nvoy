@@ -26,9 +26,30 @@
                 },
                 "AccessControl" : "PublicRead",
                 "WebsiteConfiguration": {
-                    "IndexDocument": { "Fn::Join": [ "/", [ {"Ref" : "Version"}, "index.html" ] ]}
+                    "IndexDocument": "index.html" }
                 }
             }
+        },
+        "BucketPolicy": {
+            "Type" : "AWS::S3::BucketPolicy",
+            "Properties" : {
+               "Bucket" : {"Ref" : "Bucket"},
+               "PolicyDocument": {
+                "Statement":[{
+                  "Sid" : "AddPerm",
+                  "Action":["s3:GetObject"],
+                  "Effect":"Allow",
+                  "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "Bucket" } , "/*" ]]},
+                  "Principal":"*"
+                }]
+              }
+            }
+         }    
+    },
+    "Outputs" : {
+        "IndexDocument" : {
+          "Description" : "Information about the value",
+          "Value" : { "Fn::GetAtt" : [ "Bucket", "DNSName" ]}
         }
     }
 }
