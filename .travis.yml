@@ -11,6 +11,7 @@ branches:
 before_install:
 - sudo apt-get update
 - sudo apt-get install -y jq
+- aws --version
 
 script:
 - npm test
@@ -39,3 +40,4 @@ after_deploy:
 - git push
 - git tag $VERSION
 - git push --tags
+- aws s3 cp ./docs s3://nvoy/$VERSION --recursive
