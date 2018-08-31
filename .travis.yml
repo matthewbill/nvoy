@@ -36,9 +36,14 @@ deploy:
   api_key: $MDB_NPM_TOKEN
 
 after_deploy:
+- echo Validating Cloud Formation Templates
+- aws cloudformation validate-template --template-body file://scripts/deployment/infrastructure-template.json
+- echo Deploying Infrastructure
+- aws cloudformation deploy --stack-name nvoy --template-file ./scripts/deployment/infrastructure-template.json --no-fail-on-empty-changeset
 - git add package.json
 - git commit -m "[skip ci]"
 - git push
 - git tag $VERSION
 - git push --tags
+- npm run docs
 - aws s3 cp ./docs s3://nvoy/$VERSION --recursive

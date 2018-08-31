@@ -4,10 +4,6 @@
             "Type":"String",
             "Description": "The prefix text to add to the end of resource names. This is useful for creating parallel stacks for environments.",
             "Default": ""
-        },
-        "Version": {
-            "Type":"String",
-            "Description": "The version of the package. Used for setting the index of the docs website."
         }
     },
     "Conditions": {
@@ -26,7 +22,7 @@
                 },
                 "AccessControl" : "PublicRead",
                 "WebsiteConfiguration": {
-                    "IndexDocument": "index.html" }
+                    "IndexDocument": "index.html"
                 }
             }
         },
@@ -44,12 +40,6 @@
                 }]
               }
             }
-         }    
-    },
-    "Outputs" : {
-        "IndexDocument" : {
-          "Description" : "Information about the value",
-          "Value" : { "Fn::GetAtt" : [ "Bucket", "DNSName" ]}
         }
-    }
+    }    
 }
