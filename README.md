@@ -77,12 +77,11 @@ Unlike the shortcut classes [ServiceMetricsEmitter](#Service-Metrics-Emitter) an
 
 ``` js
 
-const { AwsMetricsEmitter } = require('envoy');
+const { AwsMetricsEmitter } = require('nvoy');
 
 // options
 const batchDelay = 60000; // Metrics sent every 60 seconds
 const autoStart = false;
-const cloudWatch = aws.cloudWatch();
 const logger = winston.createLogger();
 
 // create emitter
@@ -100,12 +99,16 @@ awsMetricsEmitter.start(); // not needed if autoStart = true
 ``` js
 
 const namespace = `MyOrg/Services/MyService`;
+const metricName = 'OkResponses';
 const dimensions = [
-    { Name: 'Method', Value: method },
+    { Name: 'Method', Value: 'GET' },
     { Name: 'Environment', Value: 'test' },
 ];
+const unit = 'Count';
+const value = 1;
+const aggregate = true; // if set to false it will not batch metrics together.
 
-awsMetricsEmitter.buffer.addMetricDatum(namespace, metricName, dimensions, unit, value, true);
+awsMetricsEmitter.buffer.addMetricDatum(namespace, metricName, dimensions, unit, value, aggregate);
 
 ```
 
