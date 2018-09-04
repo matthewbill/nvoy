@@ -23,7 +23,7 @@ before_install:
 script:
 - npm test
 - npm run lint
-- sonar-scanner
+- sudo sonar-scanner
 
 before_deploy:
 # Git Configuration
