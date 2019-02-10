@@ -7,7 +7,8 @@ node_js:
 addons:
   sonarcloud:
     organizaion: "matthewbill-github"
-    token: $SONAR_TOKEN
+    token:
+      secure: $SONAR_TOKEN
 
 branches:
   only:
