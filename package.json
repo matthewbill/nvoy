@@ -25,6 +25,7 @@
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.14.0",
     "jest": "23.5.0",
+    "jest-sonar-reporter": "2.0.0",
     "jsdoc": "3.5.5"
   },
   "dependencies": {
@@ -41,5 +42,8 @@
   ],
   "bin": {
     "nvoy-service-metrics-emitter": "./bin/service-metrics-emitter.js"
+  },
+  "jestSonar": {
+    "reportPath": "coverage"
   }
 }
