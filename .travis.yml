@@ -6,7 +6,7 @@ node_js:
 
 addons:
   sonarcloud:
-    organizaion: "matthewbill-github"
+    organization: "matthewbill-github"
     token:
       secure: $SONAR_TOKEN
 
