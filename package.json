@@ -4,7 +4,7 @@
   "description": "Node.js implementation of an AWS metrics emitter.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint -f json -o eslint-report.json .",
     "docs": "jsdoc ./src -r -d ./docs --verbose",
     "test": "jest __tests__ --coverage",
     "int-test": "cross-env AWS_PROFILE=personal AWS_REGION=us-east-1 NODE_ENV=development IS_DEBUG=true ORG=MyOrg jest __int_tests__ --coverage",
@@ -25,7 +25,6 @@
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.14.0",
     "jest": "23.5.0",
-    "jest-sonar-reporter": "2.0.0",
     "jsdoc": "3.5.5"
   },
   "dependencies": {
@@ -42,8 +41,5 @@
   ],
   "bin": {
     "nvoy-service-metrics-emitter": "./bin/service-metrics-emitter.js"
-  },
-  "jestSonar": {
-    "reportPath": "coverage"
   }
 }
