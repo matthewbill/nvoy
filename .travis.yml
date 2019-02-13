@@ -24,6 +24,14 @@ before_install:
 script:
 - npm test
 - npm run lint
+# Version
+- npm version patch
+- export VERSION=$(jq '.version' package.json)
+- VERSION="${VERSION//\"}"
+- echo $VERSION;
+# Sonar
+- mdb-bt sonar-update sonar-project.properties $VERSION -b master
+- cat sonar-project.properties
 - sonar-scanner
 
 before_deploy:
@@ -34,11 +42,6 @@ before_deploy:
 - git config user.name "Travis CI"
 - git config user.email "travis@travis-ci.org"
 - npm config set git-tag-version=false # git-tag-version is false otherwise cause infinite loop
-# Version
-- npm version patch
-- export VERSION=$(jq '.version' package.json)
-- VERSION="${VERSION//\"}"
-- echo $VERSION;
 
 deploy:
   provider: npm
