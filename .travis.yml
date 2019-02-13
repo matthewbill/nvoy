@@ -30,7 +30,7 @@ script:
 - VERSION="${VERSION//\"}"
 - echo $VERSION;
 # Sonar
-- mdb-bt sonar-update sonar-project.properties $VERSION -b master
+- mdb-bt sonar-update sonar-project.properties -v $VERSION -b master
 - cat sonar-project.properties
 - sonar-scanner
 
