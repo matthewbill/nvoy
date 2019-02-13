@@ -1,6 +1,6 @@
 {
   "name": "nvoy",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "Node.js implementation of an AWS metrics emitter.",
   "main": "index.js",
   "scripts": {
